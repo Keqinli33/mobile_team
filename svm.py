@@ -15,13 +15,27 @@ def get_input():
     X = np.vstack((X_0, X_1))
     y = np.array([0] * len(X_0) + [1] * len(X_1))
 
+    trainX = []
+    trainY = []
+
+    for i in range(X.shape[0]):
+        if i % 10 == 0:
+            trainX.append(X[i])
+            trainY.append(y[i])
     # Test
     X_test_0 = np.loadtxt(test0)
     X_test_1 = np.loadtxt(test1)
     X_test = np.vstack((X_test_0, X_test_1))
     y_test = np.array([0] * len(X_test_0) + [1] * len(X_test_1))
 
-    return X, y, X_test, y_test
+    testX = []
+    testY = []
+    for i in range(X_test.shape[0]):
+        if i % 10 == 0:
+            testX.append(X_test[i])
+            testY.append(y_test[i])
+
+    return trainX, trainY, testX, testY
 
 def main():
 
@@ -33,6 +47,8 @@ def main():
 
     # Predict
     y_predict = model.predict(X_test)
+    print y_test
+    print y_predict
     print("Correctness: %f" % ((y_test == y_predict).sum() / len(y_test)))
 
 if __name__ == "__main__":
